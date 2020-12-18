@@ -1,4 +1,6 @@
-# json-comparer
+# JsonEqualityComparer
+
+[![Build status](https://ci.appveyor.com/api/projects/status/8h86p0iegkj1aiuh/branch/main?svg=true)](https://ci.appveyor.com/project/laingsimon/json-comparer/branch/main)
 
 Compare JSON objects simply and flexibly. Report the differences programmatically.
 
@@ -12,7 +14,7 @@ Strict comparison is well known. Every property in each JSON object must exist i
 
 Flexible comparison is where only the properties in the expected JSON object must exist in the actual JSON object.
 
-## Example
+## Examples
 
 ```
 var comparer = new JsonEqualityComparer();
@@ -28,7 +30,7 @@ If you need to vary the comparison options, either:
 var comparer = new JsonEqualityComparer();
 var context = new ComparisonContext
 {
-  DefaultComparisonOptions = new ObjectMatchOptions
+  DefaultComparisonOptions =
   {
     Explicit = true
   }
@@ -38,3 +40,22 @@ comparer.Compare(expected, actual, context);
 
 var differences = context.Differences;
 ```
+
+Or specify the options in the expected JSON, e.g.
+
+```
+{
+  "$ComparisonOptions": { "Explicit": true },
+  ...
+  {
+    ...
+    "$ComparisonOptions": { "Explicit": false }
+  }
+}
+```
+
+## Options
+
+1. **Explicit** - configure whether both objects have to be identical
+1. **TreatJsonStringsAsObjects** - configure whether JSON-strings can match expected JSON-objects
+1. **InlineOptionsPropertyName** - configure the name of the inline comparison-options property in the expected JSON object
