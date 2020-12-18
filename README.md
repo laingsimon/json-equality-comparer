@@ -9,10 +9,24 @@ Compare JSON objects simply and flexibly. Report the differences programmaticall
 - Per-section comparison options
 - Comparison of JSON-strings to JSON-objects
 
+#### Compatibility
+This package is built using dotnet core 3.1, so should be compatible with dotnet core 3.1+ projects.
+
 ### Strict vs flexible comparison
 Strict comparison is well known. Every property in each JSON object must exist in the other.
 
 Flexible comparison is where only the properties in the expected JSON object must exist in the actual JSON object.
+
+## Usage
+Install the package from [nuget](https://www.nuget.org/packages/JsonEqualityComparer/)
+
+```
+Install-Package JsonEqualityComparer
+
+or
+
+dotnet install JsonEqualityComparer
+```
 
 ## Examples
 
