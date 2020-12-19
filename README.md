@@ -68,6 +68,8 @@ Or specify the options in the expected JSON, e.g.
 }
 ```
 
+See [the tests](https://github.com/laingsimon/json-equality-comparer/tree/main/JsonEqualityComparer.Tests) for other examples...
+
 ## Options
 
 1. **Explicit** - configure whether both objects have to be identical
