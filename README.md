@@ -25,7 +25,7 @@ Install-Package JsonEqualityComparer
 
 or
 
-dotnet install JsonEqualityComparer
+dotnet add package JsonEqualityComparer
 ```
 
 ## Examples
