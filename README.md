@@ -1,6 +1,6 @@
 # JsonEqualityComparer
 
-[![Build status](https://ci.appveyor.com/api/projects/status/8h86p0iegkj1aiuh/branch/main?svg=true)](https://ci.appveyor.com/project/laingsimon/json-comparer/branch/main)
+[![Build status](https://ci.appveyor.com/api/projects/status/8h86p0iegkj1aiuh/branch/main?svg=true)](https://ci.appveyor.com/project/laingsimon/json-equality-comparer/branch/main)
 
 Compare JSON objects simply and flexibly. Report the differences programmatically.
 
