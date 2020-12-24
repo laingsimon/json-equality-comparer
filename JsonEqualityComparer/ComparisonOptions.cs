@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+
 namespace JsonEqualityComparer
 {
     public class ComparisonOptions
@@ -21,5 +24,10 @@ namespace JsonEqualityComparer
         /// Set this property to null or an empty string to disable the feature
         /// </summary>
         public string InlineOptionsPropertyName { get; set; } = "$ComparisonOptions";
+
+        /// <summary>
+        /// Comparer for property names in the JSON object. Defaults to case-sensitive property name comparison.
+        /// </summary>
+        public StringComparison PropertyNameComparer { get; set; } = StringComparison.Ordinal;
     }
 }

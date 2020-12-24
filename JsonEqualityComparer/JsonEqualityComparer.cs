@@ -101,7 +101,7 @@ namespace JsonEqualityComparer
 
             foreach (var expectedProperty in expected.Properties().Where(p => p.Name != (inlineOptionsPropertyName ?? "")))
             {
-                var actualProperty = actual.Property(expectedProperty.Name);
+                var actualProperty = actual.Property(expectedProperty.Name, comparisonOptionsToUse.PropertyNameComparer);
                 using (var propertyContext = context.ForProperty(expectedProperty.Name, comparisonOptions))
                 {
 
@@ -120,7 +120,7 @@ namespace JsonEqualityComparer
             }
 
             var actualPropertiesThatAreNotExpected = actual.Properties()
-                .Where(p => expected.Property(p.Name) == null)
+                .Where(p => expected.Property(p.Name, comparisonOptionsToUse.PropertyNameComparer) == null)
                 .ToArray();
 
             if (actualPropertiesThatAreNotExpected.Any() && comparisonOptionsToUse.Explicit)
