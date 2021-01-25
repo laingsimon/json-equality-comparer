@@ -70,7 +70,7 @@ Or specify the options in the expected JSON, e.g.
 
 See [the tests](https://github.com/laingsimon/json-equality-comparer/tree/main/JsonEqualityComparer.Tests) for other examples...
 
-## Options
+## Options, see [ComparisonOptions.cs](https://github.com/laingsimon/json-equality-comparer/blob/main/JsonEqualityComparer/ComparisonOptions.cs) for the full details
 
 1. **Explicit** - configure whether both objects have to be identical
 1. **TreatJsonStringsAsObjects** - configure whether JSON-strings can match expected JSON-objects
