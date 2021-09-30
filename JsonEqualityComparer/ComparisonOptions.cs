@@ -29,5 +29,13 @@ namespace JsonEqualityComparer
         /// Comparer for property names in the JSON object. Defaults to case-sensitive property name comparison.
         /// </summary>
         public StringComparison PropertyNameComparer { get; set; } = StringComparison.Ordinal;
+
+        /// <summary>
+        /// Comparer for string values, by default ensures the case and line endings are identical.<br />
+        /// 
+        /// Use <c>StringComparer.OrdinalIgnoreCase</c> for case insensitivity.<br />
+        /// Use <see cref="IgnoreLineEndingsComparer"/> for line-ending insensitivity.
+        /// </summary>
+        public IEqualityComparer<string> StringValueComparer { get; set; } = EqualityComparer<string>.Default;
     }
 }

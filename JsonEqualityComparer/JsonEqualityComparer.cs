@@ -84,7 +84,10 @@ namespace JsonEqualityComparer
 
         private static void CompareValues(JToken actualValue, JToken expectedValue, IComparisonContext context)
         {
-            var valuesAreEqual = actualValue.Value<object>().Equals(expectedValue.Value<object>());
+            var valuesAreEqual = (actualValue.Type == JTokenType.String && expectedValue.Type == JTokenType.String) 
+                ? context.DefaultComparisonOptions.StringValueComparer.Equals(actualValue.Value<string>(), expectedValue.Value<string>())
+                : actualValue.Value<object>().Equals(expectedValue.Value<object>());
+
             if (!valuesAreEqual)
             {
                 context.AddDifference(new Difference { Message = $"{actualValue.Value<object>()} ({actualValue.Type}) does not equal {expectedValue.Value<object>()} ({expectedValue.Type})" });
@@ -102,7 +105,7 @@ namespace JsonEqualityComparer
             foreach (var expectedProperty in expected.Properties().Where(p => p.Name != (inlineOptionsPropertyName ?? "")))
             {
                 var actualProperty = actual.Property(expectedProperty.Name, comparisonOptionsToUse.PropertyNameComparer);
-                using (var propertyContext = context.ForProperty(expectedProperty.Name, comparisonOptions))
+                using (var propertyContext = context.ForProperty(expectedProperty.Name, comparisonOptionsToUse))
                 {
 
                     if (actualProperty == null)
