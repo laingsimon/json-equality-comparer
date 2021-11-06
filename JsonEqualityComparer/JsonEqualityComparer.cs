@@ -97,10 +97,7 @@ namespace JsonEqualityComparer
         private void CompareObjects(JObject actual, JObject expected, IComparisonContext context)
         {
             var inlineOptionsPropertyName = context.DefaultComparisonOptions.InlineOptionsPropertyName;
-            var comparisonOptions = string.IsNullOrEmpty(inlineOptionsPropertyName)
-                ? null
-                : expected.Property(inlineOptionsPropertyName)?.Value.ToObject<ComparisonOptions>();
-            var comparisonOptionsToUse = comparisonOptions ?? context.DefaultComparisonOptions;
+            var comparisonOptionsToUse = GetComparisonOptionsForNode(context, expected, context.DefaultComparisonOptions);
 
             foreach (var expectedProperty in expected.Properties().Where(p => p.Name != (inlineOptionsPropertyName ?? "")))
             {
@@ -110,6 +107,11 @@ namespace JsonEqualityComparer
 
                     if (actualProperty == null)
                     {
+                        if (IsExpectedPropertyIgnored(expectedProperty, context, comparisonOptionsToUse))
+                        {
+                            continue;
+                        }
+
                         propertyContext.AddDifference(new Difference
                         {
                             PropertyName = expectedProperty.Name,
@@ -133,6 +135,32 @@ namespace JsonEqualityComparer
                     Message = $"Found {actualPropertiesThatAreNotExpected.Length} unexpected properties: {string.Join(", ", actualPropertiesThatAreNotExpected.Select(p => p.Name))}"
                 });
             }
+        }
+
+        private bool IsExpectedPropertyIgnored(JProperty expectedProperty, IComparisonContext context, ComparisonOptions comparisonOptions)
+        {
+            var expectedObject = expectedProperty.Value.Type == JTokenType.Object 
+                ? expectedProperty.Value.ToObject<JObject>()
+                : null;
+
+            if (expectedObject == null)
+            {
+                return false;
+            }
+
+            var comparisonOptionsToUse = GetComparisonOptionsForNode(context, expectedObject, comparisonOptions);
+            return comparisonOptionsToUse.Ignore;
+        }
+
+        private ComparisonOptions GetComparisonOptionsForNode(IComparisonContext context, JObject node, ComparisonOptions contextualComparisonOptions)
+        {
+            contextualComparisonOptions = contextualComparisonOptions ?? context.DefaultComparisonOptions;
+            var inlineOptionsPropertyName = contextualComparisonOptions.InlineOptionsPropertyName;
+            var comparisonOptions = string.IsNullOrEmpty(inlineOptionsPropertyName)
+                ? null
+                : node.Property(inlineOptionsPropertyName)?.Value.ToObject<ComparisonOptions>();
+            var comparisonOptionsToUse = comparisonOptions ?? contextualComparisonOptions;
+            return comparisonOptionsToUse;
         }
 
         private void CompareArrays(JArray actual, JArray expected, IComparisonContext context)

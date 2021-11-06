@@ -37,5 +37,10 @@ namespace JsonEqualityComparer
         /// Use <see cref="IgnoreLineEndingsComparer"/> for line-ending insensitivity.
         /// </summary>
         public IEqualityComparer<string> StringValueComparer { get; set; } = EqualityComparer<string>.Default;
+
+        /// <summary>
+        /// This property (and all descendants) should be ignored
+        /// </summary>
+        public bool Ignore { get; set; }
     }
 }
